@@ -8,8 +8,9 @@
  * If you are using Composer, you can skip this step.
  */
 require 'php/Slim/Slim.php';
+require 'php/MicroDB/Database.php';
 
-php\Slim\Slim::registerAutoloader();
+\Slim\Slim::registerAutoloader();
 
 
 /**
@@ -20,8 +21,11 @@ php\Slim\Slim::registerAutoloader();
  * your Slim application now by passing an associative array
  * of setting names and values into the application constructor.
  */
-$app = new php\Slim\Slim();
-$app->response->headers->set('Content-Type', 'application/json');
+$app = new \Slim\Slim();
+
+// $isJSON = 0;
+
+// $app->response->headers->set('Content-Type', 'application/json');
 // $body = $app->request->getBody();
 /**
  * Step 3: Define the Slim application routes
@@ -53,6 +57,7 @@ $app->get(
     </html>
 EOT;
         echo $template;
+        $isJSON = 1;
     }
 );
 
@@ -95,8 +100,10 @@ $app->post(
 $app->get(
     '/get',
     function () {
+
         $mydata = file_get_contents("test.json");
         print $mydata;
+
     }
 );
 // PUT route
@@ -249,6 +256,9 @@ $app->get('/crud(/:ptype(/:payload(/:dataset(/:id))))', function ($ptype="no",$p
    // $result = file_put_content($file, $data);
     // which should work doesn't!!!
 
+
+    
+
     
 // echo "END";
    
@@ -282,10 +292,54 @@ $app->post('/crud(/:ptype(/:payload(/:dataset(/:id))))', function ($ptype="no",$
 }); // END post
 
 
+// Testing MicroDB
+
+$app->get('/test/:name', function ($name) {
+    echo "Hello, " . $name;
+
+// echo " checkpoint";
+$db = new \MicroDB\Database('data/posts'); // data directory
+
+// create an item
+// id is an auto incrementing integer
+$id = $db->create(array(
+    'title' => 'Lorem ipsum',
+    'body' => 'At vero eos et accusam et justo duo dolores et ea rebum.'
+));
+
+// load an item
+$post = $db->load($id);
+
+// save an item
+$post['tags'] = array('lorem', 'ipsum');
+$db->save($id, $post);
+
+// find items
+$posts = $db->find(function($post) {
+    return is_array(@$post['tags']) && in_array('ipsum', @$post['tags']);
+});
+
+foreach($posts as $id => $post) {
+    print_r($post);
+}
+
+// delete an item
+// $db->delete($id);
+
+echo "Ending";
+
+});
+
 /**
  * Step 4: Run the Slim application
  *
  * This method should be called last. This executes the Slim application
  * and returns the HTTP response to the HTTP client.
  */
+
+/*
+if ($isJSON) {$app->response->headers->set('Content-Type', 'application/json');}
+echo $isJSON;
+*/
+
 $app->run();
