@@ -7,9 +7,9 @@
  *
  * If you are using Composer, you can skip this step.
  */
-require 'Slim/Slim.php';
+require 'php/Slim/Slim.php';
 
-\Slim\Slim::registerAutoloader();
+php\Slim\Slim::registerAutoloader();
 
 
 /**
@@ -20,7 +20,7 @@ require 'Slim/Slim.php';
  * your Slim application now by passing an associative array
  * of setting names and values into the application constructor.
  */
-$app = new \Slim\Slim();
+$app = new php\Slim\Slim();
 $app->response->headers->set('Content-Type', 'application/json');
 // $body = $app->request->getBody();
 /**
