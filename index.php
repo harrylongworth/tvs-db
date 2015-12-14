@@ -22,10 +22,14 @@ require 'php/MicroDB/Database.php';
  * of setting names and values into the application constructor.
  */
 $app = new \Slim\Slim();
+<<<<<<< HEAD
 
 // $isJSON = 0;
 
 // $app->response->headers->set('Content-Type', 'application/json');
+=======
+$app->response->headers->set('Content-Type', 'application/json');
+>>>>>>> origin/master
 // $body = $app->request->getBody();
 /**
  * Step 3: Define the Slim application routes
