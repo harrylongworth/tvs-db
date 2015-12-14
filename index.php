@@ -9,7 +9,7 @@
  */
 require 'php/Slim/Slim.php';
 
-php\Slim\Slim::registerAutoloader();
+\Slim\Slim::registerAutoloader();
 
 
 /**
@@ -20,7 +20,7 @@ php\Slim\Slim::registerAutoloader();
  * your Slim application now by passing an associative array
  * of setting names and values into the application constructor.
  */
-$app = new php\Slim\Slim();
+$app = new \Slim\Slim();
 $app->response->headers->set('Content-Type', 'application/json');
 // $body = $app->request->getBody();
 /**
