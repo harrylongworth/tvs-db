@@ -7,8 +7,14 @@
  *
  * If you are using Composer, you can skip this step.
  */
+
+/*
 require 'php/Slim/Slim.php';
 require 'php/MicroDB/Database.php';
+*/
+// Updated to use embedded Slim and MicroDB libraries:
+require '../../php/Slim/Slim.php';
+require '../../php/MicroDB/Database.php';
 
 \Slim\Slim::registerAutoloader();
 
